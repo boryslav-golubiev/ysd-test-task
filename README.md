@@ -9,13 +9,12 @@ CLI tool is used as client interface to interact with service.
 
 1. **YSD.Client.Cli** - Command Line Interface used to interact with WebService - AuthenticationService.
 
-> Uses _Shared/YSD.AuthenticationService.Integration for communication
-> 
-> with WebService.
+> Uses _Shared/YSD.AuthenticationService.Integration for communication with WebService.
 
 2. _Shared/**YSD.AuthenticationService.Integration** - Package for 3rd party integration with main AuthenticationService. Can be used in ClientApps and other WebServices as well.
 
 > Implements Factory for convenient client initialisation.
+> 
 > Implements DependencyInjection extensions for ease of usage.
 
 3. Folder WebServices - Contains all WebServices in subfolders.
