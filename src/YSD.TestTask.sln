@@ -1,8 +1,53 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YSD.Client.Cli", "YSD.Client.Cli\YSD.Client.Cli.csproj", "{5B6EDF6C-FE89-41A4-B65A-948A42DFDB9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{68A00E27-2130-430A-BFF5-B60CACD74436}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YSD.AuthenticationService.Integration", "_Shared\YSD.AuthenticationService.Integration\YSD.AuthenticationService.Integration.csproj", "{2B8A724F-FAB0-4F3C-8752-99D081C20B28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebServices", "WebServices", "{8C46B669-53C0-4A20-8BBD-67E06AACF497}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthenticationService", "AuthenticationService", "{1AE3853D-F27F-43D1-B682-E8843D7A9A62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YSD.AuthenticationService.Web", "WebServices\AuthenticationService\YSD.AuthenticationService.Web\YSD.AuthenticationService.Web.csproj", "{8863155D-643B-4A78-9ADB-EF1AB0384CCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YSD.AuthenticationService.Application", "WebServices\AuthenticationService\YSD.AuthenticationService.Application\YSD.AuthenticationService.Application.csproj", "{50F129DA-E7D7-47E3-8741-C26ADE91418B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YSD.AuthenticationService.DAL", "WebServices\AuthenticationService\YSD.AuthenticationService.DAL\YSD.AuthenticationService.DAL.csproj", "{16579054-01AD-4CA0-8D2B-6A9F0A5CF75A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B8A724F-FAB0-4F3C-8752-99D081C20B28} = {68A00E27-2130-430A-BFF5-B60CACD74436}
+		{1AE3853D-F27F-43D1-B682-E8843D7A9A62} = {8C46B669-53C0-4A20-8BBD-67E06AACF497}
+		{8863155D-643B-4A78-9ADB-EF1AB0384CCF} = {1AE3853D-F27F-43D1-B682-E8843D7A9A62}
+		{50F129DA-E7D7-47E3-8741-C26ADE91418B} = {1AE3853D-F27F-43D1-B682-E8843D7A9A62}
+		{16579054-01AD-4CA0-8D2B-6A9F0A5CF75A} = {1AE3853D-F27F-43D1-B682-E8843D7A9A62}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B6EDF6C-FE89-41A4-B65A-948A42DFDB9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B6EDF6C-FE89-41A4-B65A-948A42DFDB9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B6EDF6C-FE89-41A4-B65A-948A42DFDB9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B6EDF6C-FE89-41A4-B65A-948A42DFDB9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8A724F-FAB0-4F3C-8752-99D081C20B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8A724F-FAB0-4F3C-8752-99D081C20B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8A724F-FAB0-4F3C-8752-99D081C20B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8A724F-FAB0-4F3C-8752-99D081C20B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8863155D-643B-4A78-9ADB-EF1AB0384CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8863155D-643B-4A78-9ADB-EF1AB0384CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8863155D-643B-4A78-9ADB-EF1AB0384CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8863155D-643B-4A78-9ADB-EF1AB0384CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F129DA-E7D7-47E3-8741-C26ADE91418B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F129DA-E7D7-47E3-8741-C26ADE91418B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F129DA-E7D7-47E3-8741-C26ADE91418B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F129DA-E7D7-47E3-8741-C26ADE91418B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16579054-01AD-4CA0-8D2B-6A9F0A5CF75A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16579054-01AD-4CA0-8D2B-6A9F0A5CF75A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16579054-01AD-4CA0-8D2B-6A9F0A5CF75A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16579054-01AD-4CA0-8D2B-6A9F0A5CF75A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
