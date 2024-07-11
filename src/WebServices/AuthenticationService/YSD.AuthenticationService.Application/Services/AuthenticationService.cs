@@ -14,9 +14,9 @@ public class AuthenticationService(
 
         if (user is null) return null;
 
-        var hashedProvidedPassword = passwordHasher.HashPassword(user, password);
-        var hashedActualPassword = await userPasswordStore.GetPasswordHashAsync(user, cancellationToken);
+        var passwordVerificationResult = passwordHasher.VerifyHashedPassword(
+            user, user.PasswordHash, password);
 
-        return hashedActualPassword != hashedProvidedPassword ? null : user;
+        return passwordVerificationResult == PasswordVerificationResult.Failed ? null : user;
     }
 }

@@ -10,9 +10,12 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(
-            options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString("SQLServer")));
+        var connectionString = configuration.GetConnectionString("MySQL");
+        var serverVersion = configuration.GetConnectionString("MySQL_ServerVersion");
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseMySql(connectionString, new MySqlServerVersion(serverVersion));
+        });
     }
 }

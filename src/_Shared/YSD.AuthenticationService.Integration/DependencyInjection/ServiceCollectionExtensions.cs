@@ -17,10 +17,13 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         services
-            .AddHttpClient(Constants.HttpClientName);
+            .AddHttpClient(Constants.HttpClientName, (serviceProvider, httpClient) =>
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds(2);
+            });
 
         services
-            .AddSingleton<IAuthenticationServiceClientFactory, AuthenticationServiceClientFactory>(
+            .AddSingleton<IAuthenticationServiceClientFactory>(
                 serviceProvider =>
                 {
                     var factoryOptions = serviceProvider

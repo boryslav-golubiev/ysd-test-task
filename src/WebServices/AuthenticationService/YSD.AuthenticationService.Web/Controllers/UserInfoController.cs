@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YSD.AuthenticationService.Application.Services.Abstractions;
@@ -11,7 +12,7 @@ public class UserInfoController(
     IUserInfoService userInfoService) : ControllerBase
 {
     [HttpGet]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<IActionResult> GetUserInfoAsync(CancellationToken cancellationToken)
     {
         var userInfo = await userInfoService.GetUserInfoAsync(User, cancellationToken);

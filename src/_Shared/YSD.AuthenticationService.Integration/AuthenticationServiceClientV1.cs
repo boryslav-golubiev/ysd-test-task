@@ -1,4 +1,3 @@
-using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
@@ -25,11 +24,11 @@ public class AuthenticationServiceClientV1(
     public bool IsAuthenticated =>
         string.IsNullOrEmpty(AccessToken) && string.IsNullOrEmpty(RefreshToken);
 
-    public async Task<AuthenticationResult> AuthenticatedAsync(string login, string password)
+    public async Task<AuthenticationResult> AuthenticateAsync(string login, string password)
     {
-        var requestUri = new Uri(_baseUri, new Uri(AuthenticationUrl));
+        var requestUri = new Uri(_baseUri, AuthenticationUrl);
 
-        using var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+        using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
 
         using var jsonContent = new StringContent(
             JsonSerializer.Serialize(new { login, password }),
@@ -40,6 +39,8 @@ public class AuthenticationServiceClientV1(
 
         var request = await httpClient.SendAsync(requestMessage);
 
+        if (!request.IsSuccessStatusCode) throw new UnauthorizedAccessException();
+        
         var result = await request.Content.ReadFromJsonAsync<AuthenticationResult>();
 
         AccessToken = result.AccessToken;
@@ -48,7 +49,7 @@ public class AuthenticationServiceClientV1(
         return result;
     }
 
-    public async Task<AuthenticationResult> AuthenticatedWithAccessRefreshTokenAsync(string accessToken,
+    public async Task<AuthenticationResult> AuthenticateWithAccessRefreshTokenAsync(string accessToken,
         string refreshToken)
     {
         AccessToken = accessToken;
@@ -69,7 +70,7 @@ public class AuthenticationServiceClientV1(
     public async Task<UserInfo> GetUserInfoAsync()
     {
         if (!IsAuthenticated)
-            throw new InvalidOperationException(
+            throw new UnauthorizedAccessException(
                 "Client is not authorized. " +
                 "Use AuthorizeAsync(string login, string password) to authorize.");
 
@@ -77,10 +78,8 @@ public class AuthenticationServiceClientV1(
         {
             return await RequestGetUserInfoAsync();
         }
-        catch (HttpRequestException exception)
+        catch (UnauthorizedAccessException exception)
         {
-            if (exception.StatusCode != HttpStatusCode.Forbidden) throw;
-
             await RefreshTokenAsync();
             return await RequestGetUserInfoAsync();
         }
@@ -88,11 +87,16 @@ public class AuthenticationServiceClientV1(
 
     private async Task<bool> ValidateAccessTokenAsync(string accessToken)
     {
-        var requestUri = new Uri(_baseUri, new Uri(TokenValidateUrl));
+        var requestUri = new Uri(_baseUri, TokenValidateUrl);
 
-        using var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+        using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
 
-        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        using var jsonContent = new StringContent(
+            JsonSerializer.Serialize(new { accessToken }),
+            Encoding.UTF8,
+            "application/json");
+
+        requestMessage.Content = jsonContent;
 
         using var request = await httpClient.SendAsync(requestMessage);
 
@@ -101,7 +105,7 @@ public class AuthenticationServiceClientV1(
 
     private async Task<UserInfo> RequestGetUserInfoAsync()
     {
-        var requestUri = new Uri(_baseUri, new Uri(GetUserInfoUrl));
+        var requestUri = new Uri(_baseUri, GetUserInfoUrl);
 
         using var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
 
@@ -109,14 +113,33 @@ public class AuthenticationServiceClientV1(
 
         using var request = await httpClient.SendAsync(requestMessage);
 
+        if (!request.IsSuccessStatusCode) throw new UnauthorizedAccessException();
+
         var result = await request.Content.ReadFromJsonAsync<UserInfo>();
 
         return result;
     }
 
-    private Task<AuthenticationResult> RequestRefreshTokenAsync(string refreshToken)
+    private async Task<AuthenticationResult> RequestRefreshTokenAsync(string refreshToken)
     {
-        return Task.FromResult((AuthenticationResult)null);
+        var requestUri = new Uri(_baseUri, RefreshTokenUrl);
+
+        using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+
+        using var jsonContent = new StringContent(
+            JsonSerializer.Serialize(new { refreshToken }),
+            Encoding.UTF8,
+            "application/json");
+
+        requestMessage.Content = jsonContent;
+
+        using var request = await httpClient.SendAsync(requestMessage);
+
+        if (!request.IsSuccessStatusCode) throw new UnauthorizedAccessException();
+
+        var result = await request.Content.ReadFromJsonAsync<AuthenticationResult>();
+
+        return result;
     }
 
     private async Task RefreshTokenAsync()

@@ -19,8 +19,8 @@ public static class ServiceCollectionExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        services.AddScoped<IAccessTokenStore, AccessTokenStoreInMemory>();
-        services.AddScoped<IRefreshTokenStore, RefreshTokenStoreInMemory>();
+        services.AddSingleton<IAccessTokenStore, AccessTokenStoreInMemory>();
+        services.AddSingleton<IRefreshTokenStore, RefreshTokenStoreInMemory>();
         services.AddScoped<ITokenService, TokenService>();
 
         #endregion Security
