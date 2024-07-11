@@ -13,7 +13,7 @@ CLI tool is used as client interface to interact with service.
 
 2. _Shared/**YSD.AuthenticationService.Integration** - Package for 3rd party integration with main AuthenticationService. Can be used in ClientApps and other WebServices as well.
 
-> Implements Factory for convenient client initialisation. Implements
+> Implements Factory for convenient client initialisation.
 > Implements DependencyInjection extensions for ease of usage.
 
 3. Folder WebServices - Contains all WebServices in subfolders.
