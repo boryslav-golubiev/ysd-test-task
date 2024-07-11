@@ -5,6 +5,8 @@ Current implementation of AuthenticationService uses default .NET identity imple
 
 CLI tool is used as client interface to interact with service.
 
+.NET User Secrets are used while local setup/development.
+
 ## Project Structure
 
 1. **YSD.Client.Cli** - Command Line Interface used to interact with WebService - AuthenticationService.
