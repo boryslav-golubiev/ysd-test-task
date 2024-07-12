@@ -17,10 +17,7 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         services
-            .AddHttpClient(Constants.HttpClientName, (serviceProvider, httpClient) =>
-            {
-                httpClient.Timeout = TimeSpan.FromSeconds(2);
-            });
+            .AddHttpClient(Constants.HttpClientName);
 
         services
             .AddSingleton<IAuthenticationServiceClientFactory>(
